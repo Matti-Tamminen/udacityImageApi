@@ -2,7 +2,7 @@
   "name": "udacityimageapi",
   "description": "CourseApi",
   "version": "1.0.0",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "scripts": {
     "test": "npm run build && npm run jasmine",
     "jasmine": "jasmine",
@@ -38,6 +38,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "nodemon": "^2.0.12",
     "prettier": "2.3.2",
+    "supertest": "^6.1.4",
     "typescript": "^4.3.5"
   }
 }

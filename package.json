@@ -10,7 +10,7 @@
     "test": "npm run build && npm run jasmine",
     "jasmine": "jasmine",
     "build": "npx tsc",
-    "start": "npx tsc && node build/index"
+    "start": "npx tsc && node build/src/index.js"
   },
   "repository": {
     "type": "git",

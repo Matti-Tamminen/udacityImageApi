@@ -35,7 +35,16 @@
             "never"
         ],
         "prettier/prettier": [
-            "error"
+            [
+                "error",
+                {
+                    "singleQuote": true,
+                    "tabWidth": 2,
+                    "semi": false,
+                    "bracketSpacing": true,
+                    "arrowParens": "avoid"
+                }
+            ]
         ]
     }
 }

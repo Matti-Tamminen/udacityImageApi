@@ -3,15 +3,13 @@
   "description": "CourseApi",
   "version": "1.0.0",
   "main": "build/index.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "test": "npm run build && npm run jasmine",
     "jasmine": "jasmine",
     "build": "npx tsc",
-    "start": "nodemon",
-    "lint": "npx prettier --write ."
+    "start": "npx tsc && build/src/index",
+    "lint": "npx prettier --write .",
+    "server": "nodemon"
   },
   "repository": {
     "type": "git",

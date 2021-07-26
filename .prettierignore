@@ -1,0 +1,10 @@
+build
+node_modules
+spec
+.eslintrc.json
+.gitignore
+package-lock.json
+package.json
+README.md
+tsconfig.json
+nodemon.json

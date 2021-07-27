@@ -1,10 +1,11 @@
 {
     "watch": [
-        "src"
+        "src",
+        "routes"
     ],
     "ext": "ts,json",
     "ignore": [
         "src/**/*.spec.ts"
     ],
-    "exec": "npx ts-node src/index.ts"
+    "exec": "npx kill-port 3000 && npx ts-node src/index.ts"
 }

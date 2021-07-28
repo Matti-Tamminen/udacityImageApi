@@ -3,7 +3,7 @@ Serves an endpoint to resize image to desired size. Image is returned and served
 
 ## Tests
 npm run test
-jasmine (without build)
+/ jasmine (without build)
 
 ## Lint
 npm run lint
@@ -13,7 +13,7 @@ npm run build
 
 ## Start development
 npm run server
-nodemon
+/ nodemon
 
 ## Start production
 npm start

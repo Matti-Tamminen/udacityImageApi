@@ -8,7 +8,7 @@ describe('testing resize functionality', () => {
 
     // path to full sized images
     const root = path.resolve('./')
-    const filepath = path.join(root, 'build', 'full', 'kuva.jpg')
+    const filepath = path.join(root, 'build', 'full', 'kuva.jpg') // test image
 
     const app = express()
 

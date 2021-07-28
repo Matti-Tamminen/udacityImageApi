@@ -5,10 +5,11 @@ var fs = require('fs');
 var path = require('path');
 var resize = express.Router();
 resize.get('/', function (req, res) {
+    var root = path.resolve("./");
     // path to full sized images
-    var filepath = path.join(__dirname, '..', '..', 'build', 'full');
+    var filepath = path.join(root, 'build', 'full');
     // path to thumb sized images
-    var thumbpath = path.join(__dirname, '..', '..', 'build', 'thumb');
+    var thumbpath = path.join(root, 'build', 'thumb');
     // parameters
     var _a = req.query, name = _a.name, width = _a.width, height = _a.height;
     // using sharp to modify image

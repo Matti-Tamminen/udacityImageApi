@@ -43,7 +43,8 @@ describe('testing resize functionality', function () {
     var fs = require('fs');
     var path = require('path');
     // path to full sized images
-    var filepath = path.join(__dirname, '..', 'full', 'kuva.jpg');
+    var root = path.resolve("./");
+    var filepath = path.join(root, 'build', 'full', 'kuva.jpg');
     var app = express();
     app.get('/resize', function (req, res) {
         var _a = req.query, name = _a.name, width = _a.width, height = _a.height;
@@ -59,31 +60,17 @@ describe('testing resize functionality', function () {
                 throw err;
         });
     });
-    it('resizes images with sharp', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var image;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    image = null;
-                    // const image = sharp(filepath)
-                    //     .resize(200, 200)
-                    //     .then((img: any) => {
-                    //         img.toString('base64')
-                    //     })
-                    return [4 /*yield*/, sharp(filepath)
-                            .resize(200)
-                            .toBuffer()
-                            .then(function (data) {
-                            image = data.toString('base64');
-                        })];
+    it('return and resizes images with sharp', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var _a, data, info;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, sharp(filepath)
+                        .resize(200)
+                        .toBuffer({ resolveWithObject: true })];
                 case 1:
-                    // const image = sharp(filepath)
-                    //     .resize(200, 200)
-                    //     .then((img: any) => {
-                    //         img.toString('base64')
-                    //     })
-                    _a.sent();
-                    expect(image).not.toBe(null);
+                    _a = _b.sent(), data = _a.data, info = _a.info;
+                    expect(data).not.toBeFalsy();
+                    expect(info.width).toBe(200);
                     return [2 /*return*/];
             }
         });

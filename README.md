@@ -1,18 +1,24 @@
 # udacityImageApi
-Serves an endpoint to resize image to desired size. Image is returned and served separately as url as well.
+Serves an endpoint to resize image to desired size. Image is returned and served separately as an url and as saved as a file.
 
-# Tests
+## Tests
 npm run test
 jasmine (without build)
 
-# Lint
+## Lint
 npm run lint
 
-# Start development
+## Build
+npm run build
+
+## Start development
 npm run server
 nodemon
 
-# Start production
+## Start production
 npm start
 
+### Running the program
+* Example images included (kuva.jpg, kuva2.jpg)
+* Separate config files for prettier, eslint, nodemon, typescript
 

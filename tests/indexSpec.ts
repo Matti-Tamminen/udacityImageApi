@@ -10,7 +10,6 @@ describe('testing endpoints', () => {
     })
 
     it('creates endpoint & answers with valid response', () => {
-
         request(app)
             .get('/')
             .expect('Content-Type', /json/)

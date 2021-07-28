@@ -7,7 +7,8 @@ describe('testing resize functionality', () => {
     const path = require('path')
 
     // path to full sized images
-    const filepath = path.join(__dirname, '..', 'full', 'kuva.jpg')
+    const root = path.resolve('./')
+    const filepath = path.join(root, 'build', 'full', 'kuva.jpg')
 
     const app = express()
 
@@ -26,27 +27,20 @@ describe('testing resize functionality', () => {
             })
     })
 
-    it('resizes images with sharp', async () => {
-        let image: string | null = null
-        // const image = sharp(filepath)
-        //     .resize(200, 200)
-        //     .then((img: any) => {
-        //         img.toString('base64')
-        //     })
-        await sharp(filepath)
+    it('return and resizes images with sharp', async () => {
+        const { data, info } = await sharp(filepath)
             .resize(200)
-            .toBuffer()
-            .then((data: any) => {
-                image = data.toString('base64')
-            })
+            .toBuffer({ resolveWithObject: true })
 
-        expect(image).not.toBe(null)
+        expect(data).not.toBeFalsy()
+        expect(info.width).toBe(200)
     })
 
     it('gets the image file from directory', () => {
         const image = fs.readFileSync(filepath, (err: Error, img: any) => {
             img.toString('base64')
         })
+
         expect(image).not.toBeFalsy()
     })
 })

@@ -6,7 +6,7 @@ npm run test
 / jasmine (without build)
 
 ## Lint
-npm run lint
+npm run lint (prettier + eslint)
 
 ## Build
 npm run build
@@ -19,6 +19,6 @@ npm run server
 npm start
 
 ### Running the program
-* Example images included (kuva.jpg, kuva2.jpg)
+* Example image included @ tests/test_images(kuva.jpg)
 * Separate config files for prettier, eslint, nodemon, typescript
 

@@ -44,7 +44,7 @@ describe('testing resize functionality', function () {
     var path = require('path');
     // path to full sized images
     var root = path.resolve('./');
-    var filepath = path.join(root, 'build', 'full', 'kuva.jpg'); // test image
+    var filepath = path.join(root, 'tests', 'test_images', 'kuva.jpg'); // test image
     var app = express();
     app.get('/resize', function (req, res) {
         var _a = req.query, name = _a.name, width = _a.width, height = _a.height;

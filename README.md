@@ -6,7 +6,7 @@ npm run test
 / jasmine (without build)
 
 ## Lint
-npm run lint (prettier + eslint)
+npm run check (prettier + eslint)
 
 ## Build
 npm run build
@@ -19,6 +19,7 @@ npm run server
 npm start
 
 ### Running the program
-* Example image included @ tests/test_images(kuva.jpg)
+* currently works only with jpg-format
+* Example image included @ data/full/kuva.jpg (needed for testing)
 * Separate config files for prettier, eslint, nodemon, typescript
-
+* Example testing path: http://localhost:3000/api/resize?name=kuva&height=500&width=500

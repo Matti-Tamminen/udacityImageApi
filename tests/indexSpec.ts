@@ -1,29 +1,31 @@
+import { Request, Response } from 'express'
 // testing endpoint
-describe('testing endpoints', () => {
+describe('testing basic endpoints', () => {
     const request = require('supertest')
     const express = require('express')
 
     const app = express()
 
-    app.get('/', function (req: any, res: any) {
-        res.status(200).json({ status: 'ok' })
+    app.get('/', function (req: Request, res: Response) {
+        const { name, width, height } = req.query
+        res.status(200).json({ name: name, width: width, height: height })
     })
 
-    it('creates endpoint & answers with valid response', () => {
+    it('answers 200 with right parameters', () => {
         request(app)
-            .get('/')
-            .expect('Content-Type', /json/)
-            .expect('Content-Length', '15')
+            .get('/?name=pic&width=200&height=300')
             .expect(200)
-            .end(function (err: any, res: any) {
+            .expect({ name: 'pic', width: '200', height: '300' })
+            .end(function (err: Error, res: Response) {
                 if (err) throw err
             })
     })
-    it('fails gracefully', () => {
+
+    it('aswers 404 error with wrong path', () => {
         request(app)
             .get('/resiz')
             .expect(404)
-            .end(function (err: any, res: any) {
+            .end(function (err: Error, res: Response) {
                 if (err) throw err
             })
     })

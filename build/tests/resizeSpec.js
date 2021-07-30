@@ -39,46 +39,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 describe('testing resize functionality', function () {
     var request = require('supertest');
     var express = require('express');
-    var sharp = require('sharp');
     var fs = require('fs');
     var path = require('path');
+    var _a = require('../src/utils'), checkFile = _a.checkFile, handleResize = _a.handleResize, returnImage = _a.returnImage;
+    var resize = require('../src/routes/api/resize');
     // path to full sized images
+    // root folder
     var root = path.resolve('./');
-    var filepath = path.join(root, 'tests', 'test_images', 'kuva.jpg'); // test image
+    // path to full sized images
+    var filepath = path.join(root, 'data', 'full', 'kuva.jpg');
+    // path to thumb sized images
+    var thumbpath = path.join(root, 'data', 'thumb', 'kuva500x500.jpg');
     var app = express();
-    app.get('/resize', function (req, res) {
-        var _a = req.query, name = _a.name, width = _a.width, height = _a.height;
-        res.status(200).json({ name: name, width: width, height: height });
+    app.use('/resize', resize);
+    it('returns 200 after route init', function () {
+        request(app).get('/resize').expect(200);
     });
-    it('answers 200 with right parameters', function () {
-        request(app)
-            .get('/resize?name=pic&width=200&height=300')
-            .expect(200)
-            .expect({ name: 'pic', width: '200', height: '300' })
-            .end(function (err, res) {
-            if (err)
-                throw err;
-        });
-    });
-    it('return and resizes images with sharp', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, data, info;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, sharp(filepath)
-                        .resize(200)
-                        .toBuffer({ resolveWithObject: true })];
+    it('handles handleResize and returnImage', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var image;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, handleResize('kuva', '500', '500')];
                 case 1:
-                    _a = _b.sent(), data = _a.data, info = _a.info;
-                    expect(data).not.toBeFalsy();
-                    expect(info.width).toBe(200);
+                    _a.sent();
+                    image = returnImage('kuva', '500', '500');
+                    expect(image).toBeTruthy();
                     return [2 /*return*/];
             }
         });
     }); });
-    it('gets the image file from directory', function () {
-        var image = fs.readFileSync(filepath, function (err, img) {
-            img.toString('base64');
-        });
-        expect(image).not.toBeFalsy();
+    it('handles checkFile', function () {
+        var isTrue = checkFile('kuva', '500', '500');
+        var isFalse = checkFile('kuva', '40', '4');
+        expect(isTrue).toBeTrue();
+        expect(isFalse).toBeFalse();
+    });
+    var clean = function () {
+        fs.unlinkSync(thumbpath); //deletes the created image
+    };
+    process.on('exit', function () {
+        clean();
     });
 });

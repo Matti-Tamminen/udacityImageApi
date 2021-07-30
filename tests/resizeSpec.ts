@@ -2,45 +2,47 @@
 describe('testing resize functionality', () => {
     const request = require('supertest')
     const express = require('express')
-    const sharp = require('sharp')
     const fs = require('fs')
     const path = require('path')
+    const { checkFile, handleResize, returnImage } = require('../src/utils')
+    const resize = require('../src/routes/api/resize')
 
     // path to full sized images
+    // root folder
     const root = path.resolve('./')
-    const filepath = path.join(root, 'tests', 'test_images', 'kuva.jpg') // test image
+    // path to full sized images
+    const filepath = path.join(root, 'data', 'full', 'kuva.jpg')
+    // path to thumb sized images
+    const thumbpath = path.join(root, 'data', 'thumb', 'kuva500x500.jpg')
 
     const app = express()
 
-    app.get('/resize', function (req: any, res: any) {
-        const { name, width, height } = req.query
-        res.status(200).json({ name: name, width: width, height: height })
+    app.use('/resize', resize)
+
+    it('returns 200 after route init', () => {
+        request(app).get('/resize').expect(200)
     })
 
-    it('answers 200 with right parameters', () => {
-        request(app)
-            .get('/resize?name=pic&width=200&height=300')
-            .expect(200)
-            .expect({ name: 'pic', width: '200', height: '300' })
-            .end(function (err: any, res: any) {
-                if (err) throw err
-            })
+    it('handles handleResize and returnImage', async () => {
+        await handleResize('kuva', '500', '500')
+        const image = returnImage('kuva', '500', '500')
+
+        expect(image).toBeTruthy()
     })
 
-    it('return and resizes images with sharp', async () => {
-        const { data, info } = await sharp(filepath)
-            .resize(200)
-            .toBuffer({ resolveWithObject: true })
+    it('handles checkFile', () => {
+        const isTrue = checkFile('kuva', '500', '500')
+        const isFalse = checkFile('kuva', '40', '4')
 
-        expect(data).not.toBeFalsy()
-        expect(info.width).toBe(200)
+        expect(isTrue).toBeTrue()
+        expect(isFalse).toBeFalse()
     })
 
-    it('gets the image file from directory', () => {
-        const image = fs.readFileSync(filepath, (err: Error, img: any) => {
-            img.toString('base64')
-        })
+    const clean = (): void => {
+        fs.unlinkSync(thumbpath) //deletes the created image
+    }
 
-        expect(image).not.toBeFalsy()
+    process.on('exit', () => {
+        clean()
     })
 })
